@@ -1,0 +1,6 @@
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\ClassicCalculator\obj\Debug\ClassicCalculator.csprojResolveAssemblyReference.cache
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\ClassicCalculator\bin\Debug\ClassicCalculator.exe.config
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\ClassicCalculator\bin\Debug\ClassicCalculator.exe
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\ClassicCalculator\bin\Debug\ClassicCalculator.pdb
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\ClassicCalculator\obj\Debug\ClassicCalculator.exe
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\ClassicCalculator\obj\Debug\ClassicCalculator.pdb
