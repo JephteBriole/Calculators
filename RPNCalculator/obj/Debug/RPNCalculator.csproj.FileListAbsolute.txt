@@ -4,3 +4,9 @@ C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\RPNCalcul
 C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\RPNCalculator\obj\Debug\RPNCalculator.csprojResolveAssemblyReference.cache
 C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\RPNCalculator\obj\Debug\RPNCalculator.exe
 C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\RPNCalculator\obj\Debug\RPNCalculator.pdb
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\Calculators\RPNCalculator\bin\Debug\RPNCalculator.exe.config
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\Calculators\RPNCalculator\obj\Debug\RPNCalculator.exe
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\Calculators\RPNCalculator\obj\Debug\RPNCalculator.pdb
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\Calculators\RPNCalculator\bin\Debug\RPNCalculator.exe
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\Calculators\RPNCalculator\bin\Debug\RPNCalculator.pdb
+C:\Users\Jephte Ngueabo\Documents\Jephte Briole\Projects\RPNCalculator\Calculators\RPNCalculator\obj\Debug\RPNCalculator.csprojResolveAssemblyReference.cache

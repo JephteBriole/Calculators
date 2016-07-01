@@ -9,12 +9,13 @@ namespace ClassicCalculator
     public enum TknType
     {
         Tkn_Number = 1,
-        Tkn_Add = 2,
-        Tkn_Sub = 3,
-        Tkn_Mult = 4,
-        Tkn_Div = 5,
-        Tkn_OpenParenth = 6,
-        Tkn_CloseParenth = 7
+        Tkn_Add,
+        Tkn_Sub,
+        Tkn_Mult,
+        Tkn_Div,
+        Tkn_OpenParenth,
+        Tkn_CloseParenth 
+
     }
     public struct Token
     {
@@ -24,90 +25,97 @@ namespace ClassicCalculator
 
     public class Tokenizer
     {
-        public List<Token> Tokenize(string userInput)
+        public IEnumerable<Token> Tokenize(string userInput)
         {
             double tmpDouble;
-            List<Token> tokens = new List<Token>();
-
-            string[] expression = Normalize(userInput);
+            int iterator = 0;
             
-            for (int i = 0; i < expression.Length; i++)
+            while (iterator < userInput.Length)
             {
-                switch (expression[i])
+                Token token = new Token();
+
+                
+                switch (userInput[iterator])
                 {
-                    case "*":
-                        tokens.Add(new Token() { _value = expression[i], _type = TknType.Tkn_Mult });
+                    case '*':
+                        token._value += userInput[iterator].ToString();
+                        token._type = TknType.Tkn_Mult;
+                        iterator++;
                         break;
-                    case "/":
-                        tokens.Add(new Token() { _value = expression[i], _type = TknType.Tkn_Div });
+                    case '/':
+                        token._value += userInput[iterator].ToString();
+                        token._type = TknType.Tkn_Div;
+                        iterator++;
                         break;
-                    case "-":
-                        tokens.Add(new Token() { _value = expression[i], _type = TknType.Tkn_Sub });
+                    case '-':
+                        token._value += userInput[iterator].ToString();
+                        token._type = TknType.Tkn_Sub;
+                        iterator++;
                         break;
-                    case "+":
-                        tokens.Add(new Token() { _value = expression[i], _type = TknType.Tkn_Add });
+                    case '+':
+                        token._value += userInput[iterator].ToString();
+                        token._type = TknType.Tkn_Add;
+                        iterator++;
                         break;
-                    case "(":
-                        tokens.Add(new Token() { _value = expression[i], _type = TknType.Tkn_OpenParenth });
+                    case '(':
+                        token._value += userInput[iterator].ToString();
+                        token._type = TknType.Tkn_OpenParenth;
+                        iterator++;
                         break;
-                    case ")":
-                        tokens.Add(new Token() { _value = expression[i], _type = TknType.Tkn_CloseParenth});
+                    case ')':
+                        token._value += userInput[iterator].ToString();
+                        token._type = TknType.Tkn_CloseParenth;
+                        iterator++;
                         break;
                     default:
-                        if (double.TryParse(expression[i], out tmpDouble))
-                            tokens.Add(new Token() { _value = expression[i], _type = TknType.Tkn_Number });
-                        else
+                        while (iterator < userInput.Length && double.TryParse(userInput[iterator].ToString(), out tmpDouble))
                         {
-                            throw new Exception(string.Format("Calculator > {0} Is Not a Valid Token !", expression[i]));
+                            token._value += userInput[iterator].ToString();
+                            token._type = TknType.Tkn_Number;
+                            iterator++;
                         }
-                        break;
+                        break; 
                 }
+                
+                yield return token;
             }
-
-            Console.WriteLine();
-            foreach(Token tk in tokens)
-            {
-                Console.WriteLine("Token : {0} ----- Type : {1}", tk._value, tk._type);
-            }
-
-            return tokens;
         }
 
-        #region User Input Normalization Delegate
-        private string[] Normalize(string userInput)
-        {
-            List<string> expr = new List<string>();
-            foreach (var item in userInput.Split(' '))
-            {
-                if (item.StartsWith("("))
-                {
-                    expr.Add("(");
-                    string newItem = item.Replace("(", "");
-                    expr.Add(newItem);
-                }
+        //#region User Input Normalization Delegate
+        //private string[] Normalize(string userInput)
+        //{
+        //    List<string> expr = new List<string>();
+        //    foreach (var item in userInput.Split(' '))
+        //    {
+        //        if (item.StartsWith("("))
+        //        {
+        //            expr.Add("(");
+        //            string newItem = item.Replace("(", "");
+        //            expr.Add(newItem);
+        //        }
 
 
 
-                else if (item.EndsWith(")"))
-                {
-                    string newItem = item.Replace(")", "");
-                    expr.Add(newItem);
-                    expr.Add(")");
-                }
-                else if (item.Contains("("))
-                {
-                    expr.AddRange(item.Split('('));
-                }
-                else if (item.Contains(")"))
-                {
-                    expr.AddRange(item.Split(')'));
-                }
-                else
-                    expr.Add(item);
-            }
+        //        else if (item.EndsWith(")"))
+        //        {
+        //            string newItem = item.Replace(")", "");
+        //            expr.Add(newItem);
+        //            expr.Add(")");
+        //        }
+        //        else if (item.Contains("("))
+        //        {
+        //            expr.AddRange(item.Split('('));
+        //        }
+        //        else if (item.Contains(")"))
+        //        {
+        //            expr.AddRange(item.Split(')'));
+        //        }
+        //        else
+        //            expr.Add(item);
+        //    }
 
-            return expr.ToArray();
-        }
-        #endregion
+        //    return expr.ToArray();
+        //}
+        //#endregion
     }
 }
