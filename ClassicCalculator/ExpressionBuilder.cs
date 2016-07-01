@@ -11,7 +11,7 @@ namespace ClassicCalculator
     class ExpressionBuilder
     {
         private Calculator _calculator;
-        private readonly string[] _operators;
+        private Tokenizer _tokenizer;
 
         #region Properties
         private bool IsCommand { get; set; }
@@ -23,22 +23,33 @@ namespace ClassicCalculator
         {
             this.ExitFlag = false;
             this._calculator = new Calculator();
+            this._tokenizer = new Tokenizer();
         }
 
         public Expression ParseExpression(string userInput)
         {
             if (!string.IsNullOrEmpty(userInput) && IsValidInput(userInput) && !IsCommand)
             {
-                //this.UserInput += " " + userInput;
                 this.UserInput = userInput;
-                var tokens = new Tokenizer().Tokenize(this.UserInput);
-
                 this.ParseExpression();
             }
             return null;
         }
 
         #region User Input Validation / Tokenization
+
+        private Expression GetExpression()
+        {
+            return null;
+        }
+
+        private void ParseExpression()
+        {
+            foreach(var token in this._tokenizer.Tokenize(this.UserInput.Replace(" ", "")))
+            {
+                Console.WriteLine("Token : {0} <--> Type : {1}", token._value, token._type);
+            }
+        }
 
         #region Validation
         private bool IsValidInput(string input)
@@ -92,41 +103,41 @@ namespace ClassicCalculator
         }
         #endregion
 
-        #region Expression Formatting
-        private void ParseExpression()
-        {
-            double tmp = 0;
-            string[] expression = this.UserInput.Split(' ');
+        //#region Expression Formatting
+        //private void ParseExpression()
+        //{
+        //    double tmp = 0;
+        //    string[] expression = this.UserInput.Split(' ');
 
-            for (int i = 0; i < expression.Length; i++)
-            {
-                switch (expression[i])
-                { case "*":
-                        break;
-                    case "/":
-                        break;
-                    case "-":
-                        break;
-                    case "+":
-                        break;
-                    case "(":
-                        break;
-                    case ")":
-                        break;
-                    default:
-                        break;
+        //    for (int i = 0; i < expression.Length; i++)
+        //    {
+        //        switch (expression[i])
+        //        { case "*":
+        //                break;
+        //            case "/":
+        //                break;
+        //            case "-":
+        //                break;
+        //            case "+":
+        //                break;
+        //            case "(":
+        //                break;
+        //            case ")":
+        //                break;
+        //            default:
+        //                break;
                    
-                }
-            }
-        }
-        #endregion
+        //        }
+        //    }
+        //}
+        //#endregion
 
         #region Display Result
         public void Display()
         {
             DataTable dt = new DataTable();
             double result = double.Parse(dt.Compute(this.UserInput, " ").ToString());
-            Console.WriteLine("Calculator > {0} = {1}\n", this.UserInput, result/*this.Expression.EvaluateExpression()*/);
+            Console.WriteLine("Calculator > Result = {1}\n", this.UserInput, result/*this.Expression.EvaluateExpression()*/);
         }
         #endregion
 
