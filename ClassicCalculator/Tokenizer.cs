@@ -29,7 +29,8 @@ namespace ClassicCalculator
         {
             double tmpDouble;
             int iterator = 0;
-            
+            userInput = userInput.Replace(" ", "");
+
             while (iterator < userInput.Length)
             {
                 Token token = new Token();

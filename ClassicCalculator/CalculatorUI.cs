@@ -23,8 +23,8 @@ namespace ClassicCalculator
             while (!_exprBuilder.ExitFlag)
             {
                 Console.Write("Calculator > ");
-                string userInput = Console.ReadLine().Trim();
-                _exprBuilder.ParseExpression(userInput);
+                _exprBuilder.UserInput = Console.ReadLine().Trim();
+                _exprBuilder.ParseExpression();
                // _exprBuilder.Display();
             }
         }

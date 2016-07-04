@@ -15,7 +15,7 @@ namespace ClassicCalculator
 
         #region Properties
         private bool IsCommand { get; set; }
-        private string UserInput { get; set; }
+        public string UserInput { get; set; }
         private Expression Expression { get; set; }
         public bool ExitFlag { get; set; } 
         #endregion
@@ -26,12 +26,11 @@ namespace ClassicCalculator
             this._tokenizer = new Tokenizer();
         }
 
-        public Expression ParseExpression(string userInput)
+        public Expression ParseExpression()
         {
-            if (!string.IsNullOrEmpty(userInput) && IsValidInput(userInput) && !IsCommand)
+            if (!string.IsNullOrEmpty(this.UserInput) && IsValidInput(this.UserInput) && !IsCommand)
             {
-                this.UserInput = userInput;
-                this.ParseExpression();
+                this.ParseExpression(this._tokenizer.Tokenize(this.UserInput));
             }
             return null;
         }
@@ -43,12 +42,40 @@ namespace ClassicCalculator
             return null;
         }
 
-        private void ParseExpression()
+        private Expression ParseExpression(IEnumerable<Token> tokens)
         {
-            foreach(var token in this._tokenizer.Tokenize(this.UserInput.Replace(" ", "")))
+            Expression leftOperand;
+            Expression rightOperand;
+            int iterator = 0;
+
+            foreach (var token in tokens)
             {
-                Console.WriteLine("Token : {0} <--> Type : {1}", token._value, token._type);
+                switch(token._type)
+                {
+                    case TknType.Tkn_Number:
+                        leftOperand = new NumberExpression(double.Parse(token._value));
+                        break;
+                    case TknType.Tkn_Add:
+                        var newTokens = tokens.ToList().GetRange(iterator, tokens.Count() - 1);
+                        rightOperand = this.ParseExpression(newTokens);
+                        break;
+                    case TknType.Tkn_Sub:
+
+                        break;
+                    case TknType.Tkn_Mult:
+
+                        break;
+                    case TknType.Tkn_Div:
+                        break;
+                    case TknType.Tkn_OpenParenth:
+                        break;
+                }
+
+                iterator++;
+
+                //Console.WriteLine("Token : {0} <--> Type : {1}", token._value, token._type);
             }
+            return null;
         }
 
         #region Validation
@@ -137,7 +164,7 @@ namespace ClassicCalculator
         {
             DataTable dt = new DataTable();
             double result = double.Parse(dt.Compute(this.UserInput, " ").ToString());
-            Console.WriteLine("Calculator > Result = {1}\n", this.UserInput, result/*this.Expression.EvaluateExpression()*/);
+            Console.WriteLine("Calculator > Result = {0}\n", result/*this.Expression.EvaluateExpression()*/);
         }
         #endregion
 
