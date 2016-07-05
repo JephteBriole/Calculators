@@ -9,7 +9,7 @@ namespace ClassicCalculator
 {
     class Calculator
     {
-        private Expression CurrentValue { get; set; }
+        public Expression CurrentValue { get; set; }
 
         #region Calculator's Logic
         public void Clear()

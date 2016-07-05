@@ -1,4 +1,5 @@
 ﻿using ClassicCalculator.Abstracts;
+using ClassicCalculator.Operators;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -42,10 +43,11 @@ namespace ClassicCalculator
             return null;
         }
 
-        private Expression ParseExpression(IEnumerable<Token> tokens)
+        private Expression ParseExpression(IEnumerable<Token> tokens, Expression currentExpr = null)
         {
-            Expression leftOperand;
-            Expression rightOperand;
+            //Expression leftOperand;
+            //Expression rightOperand;
+            IEnumerable<Token> newTokens;
             int iterator = 0;
 
             foreach (var token in tokens)
@@ -53,20 +55,29 @@ namespace ClassicCalculator
                 switch(token._type)
                 {
                     case TknType.Tkn_Number:
-                        leftOperand = new NumberExpression(double.Parse(token._value));
+                        this._calculator.CurrentValue = new NumberExpression(double.Parse(token._value));
                         break;
+
                     case TknType.Tkn_Add:
-                        var newTokens = tokens.ToList().GetRange(iterator, tokens.Count() - 1);
-                        rightOperand = this.ParseExpression(newTokens);
+                        newTokens = tokens.ToList().GetRange(iterator, tokens.Count() - 1);
+                        this._calculator.CurrentValue = new AddOperator(currentExpr ?? new NumberExpression(0), this.ParseExpression(newTokens.Skip(1), this._calculator.CurrentValue));
                         break;
+
                     case TknType.Tkn_Sub:
-
+                        newTokens = tokens.ToList().GetRange(iterator, tokens.Count() - 1);
+                        this._calculator.CurrentValue = new SubstractOperator(currentExpr ?? new NumberExpression(0), this.ParseExpression(newTokens.Skip(1), this._calculator.CurrentValue));
                         break;
+
                     case TknType.Tkn_Mult:
+                        newTokens = tokens.ToList().GetRange(iterator, tokens.Count() - 1);
+                        this._calculator.CurrentValue = new MultiplyOperator(currentExpr ?? new NumberExpression(0), this.ParseExpression(newTokens.Skip(1), this._calculator.CurrentValue));
+                        break;
 
-                        break;
                     case TknType.Tkn_Div:
+                        newTokens = tokens.ToList().GetRange(iterator, tokens.Count() - 1);
+                        this._calculator.CurrentValue = new DivideOperator(currentExpr ?? new NumberExpression(0), this.ParseExpression(newTokens.Skip(1), this._calculator.CurrentValue));
                         break;
+
                     case TknType.Tkn_OpenParenth:
                         break;
                 }
@@ -75,7 +86,8 @@ namespace ClassicCalculator
 
                 //Console.WriteLine("Token : {0} <--> Type : {1}", token._value, token._type);
             }
-            return null;
+
+            return currentExpr;
         }
 
         #region Validation
